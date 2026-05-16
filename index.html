@@ -669,7 +669,7 @@ try{
 
 /* LIMIT MEMORY */
 
-if(conversation.length > 40){
+if(conversation.length > 20){
 
 conversation.splice(1,2);
 
@@ -693,7 +693,7 @@ headers:{
 body:JSON.stringify({
 
 model:
-"mistral-large-latest",
+"ministral-8b-latest",
 
 messages:
 conversation
@@ -755,14 +755,18 @@ console.error(error);
 
 userInput.addEventListener(
 
+userInput.addEventListener(
+
 "keydown",
 
 function(e){
 
+/* CTRL + ENTER = SEND */
+
 if(
 e.key === "Enter"
 &&
-!e.shiftKey
+e.ctrlKey
 ){
 
 e.preventDefault();
@@ -770,6 +774,8 @@ e.preventDefault();
 sendMessage();
 
 }
+
+/* ENTER ALONE = NEW LINE */
 
 }
 );
