@@ -618,6 +618,7 @@ reader.readAsDataURL(file);
 
 async function sendMessage(){
 
+alert("button works");
 const text =
 userInput.value.trim();
 
@@ -696,142 +697,20 @@ model:
 "model:
 "mistral-small-latest",",
 
-messages:
-conversation
+messages:conversation
 
 })
 
 });
-
 const data =
-async function sendMessage(){
-
-const text=userInput.value.trim();
-const file=imageInput.files[0];
-
-if(!text && !file) return;
-
-let imageData=null;
-
-/* IMAGE */
-
-if(file){
-
-imageData=await fileToBase64(file);
-
-addMessage(
-imageData,
-"user",
-true
-);
-
-conversation.push({
-role:"user",
-content:"[Image]",
-image:imageData
-});
-
-}
-
-/* TEXT */
-
-if(text){
-
-addMessage(
-text,
-"user"
-);
-
-conversation.push({
-role:"user",
-content:text
-});
-
-}
-
-saveMemory();
-
-userInput.value="";
-
-statusText.textContent=
-"typing...";
-
-const thinking=
-document.createElement("div");
-
-thinking.className=
-"message bot typing";
-
-thinking.innerHTML=
-"•••";
-
-messagesDiv.appendChild(
-thinking
-);
-
-try{
-
-let content=[];
-
-if(text){
-
-content.push({
-type:"text",
-text:text
-});
-
-}
-
-if(imageData){
-
-content.push({
-type:"image_url",
-image_url:imageData
-});
-
-}
-
-const response=
-await fetch(API_URL,{
-
-method:"POST",
-
-headers:{
-
-"Authorization":
-"Bearer "+API_KEY,
-
-"Content-Type":
-"application/json"
-
-},
-
-body:JSON.stringify({
-
-model:
-"mistral-small-latest",
-
-messages:[{
-
-role:"user",
-
-content:content
-
-}]
-
-})
-
-});
-
-const data=
 await response.json();
 
 thinking.remove();
 
-statusText.textContent=
+statusText.textContent =
 "online";
 
-const reply=
+const reply =
 data.choices?.[0]?.message?.content
 ||
 "No response";
@@ -842,21 +721,16 @@ reply,
 );
 
 conversation.push({
-
 role:"assistant",
 content:reply
-
 });
 
 saveMemory();
-
-imageInput.value="";
-
 }catch(error){
 
 thinking.remove();
 
-statusText.textContent=
+statusText.textContent =
 "online";
 
 addMessage(
