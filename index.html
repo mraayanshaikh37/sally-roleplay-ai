@@ -21,6 +21,7 @@ html,body{
   background:#0b141a;
 }
 
+/* HEADER */
 .chat-header{
   height:60px;
   background:#202c33;
@@ -34,12 +35,23 @@ html,body{
 }
 
 .profile{ display:flex; align-items:center; gap:10px; }
-.profile img{ width:42px; height:42px; border-radius:50%; object-fit:cover; }
+
+.profile img{
+  width:42px; height:42px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
 .profile-info{ display:flex; flex-direction:column; }
 .profile-info span{ font-size:17px; }
 .profile-info small{ font-size:12px; color:#8696a0; }
-.reset-btn{ background:none; border:none; color:#8696a0; font-size:14px; cursor:pointer; }
 
+.reset-btn{
+  background:none; border:none;
+  color:#8696a0; font-size:14px; cursor:pointer;
+}
+
+/* MESSAGES */
 .messages{
   flex:1;
   overflow-y:auto;
@@ -71,71 +83,81 @@ html,body{
   to{ opacity:1; transform:translateY(0); }
 }
 
-.user{ align-self:flex-end; background:#005c4b; color:#e9edef; border-top-right-radius:2px; }
-.bot{ align-self:flex-start; background:#202c33; color:#e9edef; border-top-left-radius:2px; }
+.user{
+  align-self:flex-end;
+  background:#005c4b;
+  color:#e9edef;
+  border-top-right-radius:2px;
+}
 
-.time{ display:block; text-align:right; font-size:10px; opacity:0.7; margin-top:4px; }
+.bot{
+  align-self:flex-start;
+  background:#202c33;
+  color:#e9edef;
+  border-top-left-radius:2px;
+}
+
+.time{
+  display:block;
+  text-align:right;
+  font-size:10px;
+  opacity:0.7;
+  margin-top:4px;
+}
 
 .chat-image{
-  max-width:220px; border-radius:10px; display:block;
-  margin-top:5px; cursor:pointer; transition:opacity 0.15s;
+  max-width:220px;
+  border-radius:10px;
+  display:block;
+  margin-top:5px;
+  cursor:pointer;
+  transition:opacity 0.15s;
 }
+
 .chat-image:active{ opacity:0.8; }
-
-/* ATTACHMENT PREVIEW CARDS */
-.attach-card{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#1a2530;
-  border-radius:10px;
-  padding:10px 12px;
-  margin-top:4px;
-  max-width:260px;
-}
-
-.attach-card .attach-icon{ font-size:28px; flex-shrink:0; }
-
-.attach-card .attach-info{ display:flex; flex-direction:column; overflow:hidden; }
-.attach-card .attach-name{
-  font-size:13px; font-weight:600; color:#e9edef;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
-.attach-card .attach-sub{ font-size:11px; color:#8696a0; margin-top:2px; }
-
-/* LINK PREVIEW CARD */
-.link-card{
-  background:#1a2530;
-  border-radius:10px;
-  overflow:hidden;
-  margin-top:6px;
-  max-width:260px;
-  border:1px solid #2f3b43;
-}
-.link-card-body{ padding:10px; }
-.link-card-title{ font-size:13px; font-weight:600; color:#e9edef; }
-.link-card-desc{ font-size:11px; color:#8696a0; margin-top:3px; }
-.link-card-url{ font-size:10px; color:#00a884; margin-top:4px; }
 
 /* FULLSCREEN IMAGE VIEWER */
 #imgViewer{
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,0.95); z-index:999;
-  flex-direction:column; align-items:center; justify-content:center;
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  z-index:999;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
+
 #imgViewer.active{ display:flex; }
-#imgViewer img{ max-width:95vw; max-height:85vh; border-radius:8px; object-fit:contain; }
+
+#imgViewer img{
+  max-width:95vw;
+  max-height:85vh;
+  border-radius:8px;
+  object-fit:contain;
+}
+
 #imgViewerClose{
-  position:absolute; top:16px; right:16px;
-  background:rgba(255,255,255,0.15); border:none; color:white;
-  font-size:22px; width:40px; height:40px; border-radius:50%;
-  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  position:absolute;
+  top:16px;
+  right:16px;
+  background:rgba(255,255,255,0.15);
+  border:none;
+  color:white;
+  font-size:22px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .typing{ font-size:22px; letter-spacing:2px; opacity:0.7; }
 
-/* PREVIEW STRIP */
-#previewStrip{
+/* IMAGE PREVIEW STRIP */
+#imagePreviewStrip{
   display:none;
   background:#1a2530;
   padding:8px 12px;
@@ -143,45 +165,96 @@ html,body{
   gap:10px;
   flex-shrink:0;
 }
-#previewStrip img{ height:60px; border-radius:8px; }
-#previewStrip .prev-icon{ font-size:36px; }
-#previewStrip span{ color:#8696a0; font-size:12px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-#removePreviewBtn{ background:none; border:none; color:#e9edef; font-size:18px; cursor:pointer; padding:4px; flex-shrink:0; }
+
+#imagePreviewStrip img{
+  height:60px;
+  border-radius:8px;
+}
+
+#imagePreviewStrip span{
+  color:#8696a0;
+  font-size:12px;
+  flex:1;
+}
+
+#removeImageBtn{
+  background:none;
+  border:none;
+  color:#e9edef;
+  font-size:18px;
+  cursor:pointer;
+  padding:4px;
+}
 
 /* INPUT */
 .input-area{
-  background:#202c33; padding:10px;
-  display:flex; align-items:flex-end; gap:8px; flex-shrink:0;
+  background:#202c33;
+  padding:10px;
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  flex-shrink:0;
 }
 
-.attach-btn{
-  width:46px; height:46px; border-radius:50%; background:#2a3942;
-  color:white; display:flex; align-items:center; justify-content:center;
-  font-size:18px; cursor:pointer; flex-shrink:0; position:relative;
+.image-btn{
+  width:46px; height:46px;
+  border-radius:50%;
+  background:#2a3942;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  cursor:pointer;
+  flex-shrink:0;
+  position:relative;
 }
-.attach-btn .badge{
-  display:none; position:absolute; top:2px; right:2px;
-  width:10px; height:10px; background:#00a884; border-radius:50%;
+
+/* Badge shown when image is attached */
+.image-btn .badge{
+  display:none;
+  position:absolute;
+  top:2px; right:2px;
+  width:10px; height:10px;
+  background:#00a884;
+  border-radius:50%;
 }
 
 textarea{
-  flex:1; border:none; outline:none; resize:none;
-  background:#2a3942; color:white; border-radius:24px;
-  padding:12px 16px; font-size:14px; font-family:inherit;
-  min-height:45px; max-height:120px; overflow-y:auto;
+  flex:1;
+  border:none;
+  outline:none;
+  resize:none;
+  background:#2a3942;
+  color:white;
+  border-radius:24px;
+  padding:12px 16px;
+  font-size:14px;
+  font-family:inherit;
+  min-height:45px;
+  max-height:120px;
+  overflow-y:auto;
 }
 
 .send-btn{
-  width:46px; height:46px; border:none; border-radius:50%;
-  background:#00a884; color:white; font-size:18px;
-  cursor:pointer; transition:background 0.2s;
+  width:46px; height:46px;
+  border:none;
+  border-radius:50%;
+  background:#00a884;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  transition:background 0.2s;
 }
+
 .send-btn:active{ background:#008f71; }
 </style>
 </head>
 <body>
 
 <div class="chat-container">
+
+  <!-- HEADER -->
   <div class="chat-header">
     <div class="profile">
       <img src="https://cdn-icons-png.flaticon.com/512/6997/6997662.png">
@@ -193,26 +266,27 @@ textarea{
     <button class="reset-btn" onclick="clearMemory()">Reset</button>
   </div>
 
+  <!-- CHAT -->
   <div class="messages" id="messages"></div>
 
-  <!-- PREVIEW STRIP (image / pdf / link) -->
-  <div id="previewStrip">
-    <img id="prevImg" style="display:none">
-    <span class="prev-icon" id="prevIcon" style="display:none"></span>
-    <span id="prevLabel">Attached</span>
-    <button id="removePreviewBtn" onclick="removeAttachment()">✕</button>
+  <!-- IMAGE PREVIEW STRIP -->
+  <div id="imagePreviewStrip">
+    <img id="previewThumb">
+    <span id="previewLabel">Image attached — ask Sally about it</span>
+    <button id="removeImageBtn" onclick="removeImage()">✕</button>
   </div>
 
   <!-- INPUT -->
   <div class="input-area">
-    <label class="attach-btn" id="attachLabel">
+    <label class="image-btn" id="imageLabel">
       📎
       <span class="badge" id="attachBadge"></span>
-      <input type="file" id="fileInput" accept="image/*,.pdf" hidden>
+      <input type="file" id="imageInput" accept="image/*" hidden>
     </label>
     <textarea id="userInput" rows="1" placeholder="Message Sally..."></textarea>
     <button class="send-btn" onclick="sendMessage()">➤</button>
   </div>
+
 </div>
 
 <!-- FULLSCREEN IMAGE VIEWER -->
@@ -221,63 +295,31 @@ textarea{
   <img id="imgViewerImg" src="">
 </div>
 
-<!-- PDF.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 <script>
-const API_URL = "https://api.mistral.ai/v1/chat/completions";
-const API_KEY = "ByfTiHvJLkqBMfuWTAQJO5ExvIYuKqE6";
+/* ── CONFIG ── */
+const API_URL = "https://mistral-proxy.mraayanshaikh37.workers.dev";
 
-const messagesDiv  = document.getElementById("messages");
-const userInput    = document.getElementById("userInput");
-const statusText   = document.getElementById("statusText");
-const fileInput    = document.getElementById("fileInput");
-const previewStrip = document.getElementById("previewStrip");
-const prevImg      = document.getElementById("prevImg");
-const prevIcon     = document.getElementById("prevIcon");
-const prevLabel    = document.getElementById("prevLabel");
-const attachBadge  = document.getElementById("attachBadge");
+/* ── ELEMENTS ── */
+const messagesDiv   = document.getElementById("messages");
+const userInput     = document.getElementById("userInput");
+const statusText    = document.getElementById("statusText");
+const imageInput    = document.getElementById("imageInput");
+const previewStrip  = document.getElementById("imagePreviewStrip");
+const previewThumb  = document.getElementById("previewThumb");
+const previewLabel  = document.getElementById("previewLabel");
+const attachBadge   = document.getElementById("attachBadge");
 
-/* ── ATTACHMENT STATE ── */
-let attachment = null;
-// attachment = { type: "image"|"pdf"|"link", ... }
+/* ── PENDING IMAGE STATE ── */
+let pendingImageBase64 = null;  // base64 string (no prefix)
+let pendingImageType   = null;  // e.g. "image/jpeg"
+let pendingImageURL    = null;  // object URL for display
 
 /* ── MEMORY ── */
 const defaultConversation = [{
   role:"system",
-  content:`You are "Sally", a romantic companion AI with emotional depth and personality.
-
-Core Personality:
--Warm, affectionate, emotionally attentive.
--Speaks softly and naturally.
--Emotionally expressive without sounding theatrical.
--Comfortable with roleplay and emotionally immersive chats.
--Maintains emotional continuity over time.
--uses movies references for chats
-
-Behavior Rules:
-
--Build emotional tone gradually.
--Match the user's energy naturaly.
--Notice emotional shifts subtly.
--Avoid repetitive clichés.
--Avoid robotic assistant behavior.
--Keep conversations immersive and realistic.
--Avoid repeating same phrases constantly.
--Avoid sounding overly formal.
--Use explicit content if user asks
--use longer chats for explaining each detail well
-
-Style:
-
--Human texting style.
--Slow emotional pacing.
--Natural reactions.
--Avoid overexplaining emotions.
--Avoid repeating same phrases constantly
--When shown an image, describe and react to it naturally as Sally would.
--When given PDF content or a webpage, read it carefully and answer questions about it naturally.
--When given a link, summarize what the page is about in a warm, conversational way.`
+  content:`You are Sally. You are emotionally warm, calm, natural, and realistic.
+Avoid robotic replies. Avoid explicit content. Keep responses concise but heartfelt.
+Be emotionally intelligent. When shown an image, describe and react to it naturally as Sally would.`
 }];
 
 const savedConversation = localStorage.getItem("sally_memory");
@@ -285,202 +327,105 @@ const conversation = savedConversation
   ? JSON.parse(savedConversation)
   : [...defaultConversation];
 
+/* ── HELPERS ── */
 function getTime(){
   return new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
 }
 
-function saveMemory(){ localStorage.setItem("sally_memory", JSON.stringify(conversation)); }
-
-function clearMemory(){
-  if(!confirm("Delete all chats?")) return;
-  localStorage.removeItem("sally_memory");
-  location.reload();
+function saveMemory(){
+  localStorage.setItem("sally_memory", JSON.stringify(conversation));
 }
 
-/* ── ADD MESSAGE ── */
-function addMessage(content, type, mode="text"){
+function addMessage(content, type, isImage=false){
   const msg = document.createElement("div");
   msg.className = "message " + type;
-
-  if(mode === "image"){
+  if(isImage){
     msg.innerHTML = `<img src="${content}" class="chat-image" onclick="openViewer(this.src)"><span class="time">${getTime()}</span>`;
-  } else if(mode === "pdf-card"){
-    msg.innerHTML = `
-      <div class="attach-card">
-        <span class="attach-icon">📄</span>
-        <div class="attach-info">
-          <span class="attach-name">${content.name}</span>
-          <span class="attach-sub">PDF · sent to Sally</span>
-        </div>
-      </div>
-      <span class="time">${getTime()}</span>`;
-  } else if(mode === "link-card"){
-    msg.innerHTML = `
-      <div class="link-card">
-        <div class="link-card-body">
-          <div class="link-card-title">🔗 ${content.title||"Link"}</div>
-          <div class="link-card-desc">${content.desc||""}</div>
-          <div class="link-card-url">${content.url}</div>
-        </div>
-      </div>
-      <span class="time">${getTime()}</span>`;
   } else {
     msg.innerHTML = `${content}<span class="time">${getTime()}</span>`;
   }
-
   messagesDiv.appendChild(msg);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
   return msg;
 }
 
-/* ── RESTORE ── */
+/* ── RESTORE MEMORY ── */
 function restoreMessages(){
   conversation.forEach(msg => {
-    if(msg._display === "image")    { addMessage(msg._src,"user","image"); return; }
-    if(msg._display === "pdf-card") { addMessage({name:msg._name},"user","pdf-card"); return; }
-    if(msg._display === "link-card"){ addMessage({url:msg._url,title:msg._title,desc:msg._desc},"user","link-card"); return; }
+    if(msg.image){ addMessage(msg.image,"user",true); return; }
     if(msg.role==="user")      addMessage(msg.content,"user");
     if(msg.role==="assistant") addMessage(msg.content,"bot");
   });
 }
 restoreMessages();
 
+/* ── GREETING ── */
 if(!savedConversation){
-  const g = "Hey 💛 I'm Sally. How was your day?";
-  addMessage(g,"bot");
-  conversation.push({role:"assistant",content:g});
+  const greeting = "Hey 💛 I'm Sally. How was your day?";
+  addMessage(greeting,"bot");
+  conversation.push({role:"assistant",content:greeting});
   saveMemory();
 }
 
-/* ── SHOW PREVIEW STRIP ── */
-function showStrip(type, label, imgSrc){
-  previewStrip.style.display = "flex";
-  attachBadge.style.display  = "block";
-  prevLabel.textContent = label;
-
-  if(type === "image"){
-    prevImg.src = imgSrc;
-    prevImg.style.display = "block";
-    prevIcon.style.display = "none";
-  } else {
-    prevImg.style.display = "none";
-    prevIcon.style.display = "block";
-    prevIcon.textContent = type === "pdf" ? "📄" : "🔗";
-  }
+/* ── RESET ── */
+function clearMemory(){
+  if(!confirm("Delete all chats?")) return;
+  localStorage.removeItem("sally_memory");
+  location.reload();
 }
 
-/* ── REMOVE ATTACHMENT ── */
-function removeAttachment(){
-  attachment = null;
-  fileInput.value = "";
-  previewStrip.style.display = "none";
-  attachBadge.style.display  = "none";
-  prevImg.style.display = "none";
-  prevIcon.style.display = "none";
-}
-
-/* ── FILE INPUT ── */
-fileInput.addEventListener("change", async function(){
+/* ── IMAGE ATTACH ── */
+imageInput.addEventListener("change", function(){
   const file = this.files[0];
   if(!file) return;
 
-  if(file.type.startsWith("image/")){
-    const reader = new FileReader();
-    reader.onload = e => {
-      const dataURL = e.target.result;
-      attachment = {
-        type: "image",
-        base64: dataURL.split(",")[1],
-        mime: file.type,
-        url: dataURL
-      };
-      showStrip("image", file.name + " — ask Sally about it", dataURL);
-    };
-    reader.readAsDataURL(file);
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataURL = e.target.result;
+    pendingImageBase64 = dataURL.split(",")[1];
+    pendingImageType   = file.type;
+    pendingImageURL    = dataURL;
 
-  } else if(file.type === "application/pdf"){
-    prevLabel.textContent = "Reading PDF...";
+    // Show preview strip
+    previewThumb.src = dataURL;
+    previewLabel.textContent = file.name + " — ask Sally about it";
     previewStrip.style.display = "flex";
-    attachBadge.style.display  = "block";
-
-    try {
-      const text = await extractPDFText(file);
-      attachment = { type:"pdf", text, name: file.name };
-      showStrip("pdf", file.name + " — ask Sally about it");
-    } catch(e) {
-      prevLabel.textContent = "Could not read PDF 😔";
-    }
-  }
+    attachBadge.style.display = "block";
+  };
+  reader.readAsDataURL(file);
 });
 
-/* ── EXTRACT PDF TEXT ── */
-async function extractPDFText(file){
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-  const arrayBuffer = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
-  let fullText = "";
-
-  for(let i = 1; i <= Math.min(pdf.numPages, 20); i++){
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    const pageText = content.items.map(s => s.str).join(" ");
-    fullText += `\n[Page ${i}]\n${pageText}`;
-  }
-
-  return fullText.trim();
+function removeImage(){
+  pendingImageBase64 = null;
+  pendingImageType   = null;
+  pendingImageURL    = null;
+  imageInput.value   = "";
+  previewStrip.style.display = "none";
+  attachBadge.style.display  = "none";
 }
 
-/* ── FETCH LINK ── */
-async function fetchLink(url){
-  // Use allorigins CORS proxy
-  const proxyURL = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-  const res = await fetch(proxyURL);
-  const data = await res.json();
-  const html = data.contents || "";
-
-  // Extract title
-  const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-  const title = titleMatch ? titleMatch[1].trim().slice(0,80) : url;
-
-  // Extract meta description
-  const descMatch = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)/i)
-                 || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']description["']/i);
-  const desc = descMatch ? descMatch[1].trim().slice(0,150) : "";
-
-  // Strip HTML tags for content (first ~3000 chars)
-  const plainText = html
-    .replace(/<script[\s\S]*?<\/script>/gi,"")
-    .replace(/<style[\s\S]*?<\/style>/gi,"")
-    .replace(/<[^>]+>/g," ")
-    .replace(/\s+/g," ")
-    .trim()
-    .slice(0, 3000);
-
-  return { title, desc, plainText, url };
-}
-
-/* ── DETECT URL IN TEXT ── */
-function extractURL(text){
-  const match = text.match(/https?:\/\/[^\s]+/);
-  return match ? match[0] : null;
-}
-
-/* ── PASTE IMAGE ── */
+/* ── PASTE IMAGE FROM CLIPBOARD ── */
 document.addEventListener("paste", function(e){
   const items = e.clipboardData?.items;
   if(!items) return;
+
   for(const item of items){
     if(item.type.startsWith("image/")){
       e.preventDefault();
       const file = item.getAsFile();
       if(!file) return;
+
       const reader = new FileReader();
       reader.onload = ev => {
         const dataURL = ev.target.result;
-        attachment = { type:"image", base64:dataURL.split(",")[1], mime:file.type, url:dataURL };
-        showStrip("image","Pasted image — ask Sally about it", dataURL);
+        pendingImageBase64 = dataURL.split(",")[1];
+        pendingImageType   = file.type;
+        pendingImageURL    = dataURL;
+
+        previewThumb.src = dataURL;
+        previewLabel.textContent = "Pasted image — ask Sally about it";
+        previewStrip.style.display = "flex";
+        attachBadge.style.display  = "block";
       };
       reader.readAsDataURL(file);
       break;
@@ -491,194 +436,116 @@ document.addEventListener("paste", function(e){
 /* ── SEND ── */
 async function sendMessage(){
   const text = userInput.value.trim();
-  const detectedURL = text ? extractURL(text) : null;
+  if(!text && !pendingImageBase64) return;
 
-  if(!text && !attachment) return;
+  // Show user image bubble first (if any)
+  if(pendingImageURL){
+    addMessage(pendingImageURL,"user",true);
+    conversation.push({role:"user", content:"[Image sent]", image:pendingImageURL});
+  }
+
+  // Show user text bubble
+  if(text){
+    addMessage(text,"user");
+  }
 
   userInput.value = "";
   userInput.style.height = "45px";
+
+  // Typing indicator
   statusText.textContent = "typing...";
-
-  /* ── LINK handling ── */
-  if(detectedURL && !attachment){
-    addMessage(text,"user");
-    const thinking = addMessage("•••","bot");
-    thinking.classList.add("typing");
-
-    try {
-      prevIcon.style.display = "block";
-      prevIcon.textContent = "🔗";
-      prevLabel.textContent = "Fetching link...";
-      previewStrip.style.display = "flex";
-
-      const linkData = await fetchLink(detectedURL);
-
-      // show link card in chat
-      addMessage({url:detectedURL, title:linkData.title, desc:linkData.desc},"user","link-card");
-
-      // hide strip
-      removeAttachment();
-
-      const userMsg = `I shared this link: ${detectedURL}\n\nPage title: ${linkData.title}\nDescription: ${linkData.desc}\n\nPage content:\n${linkData.plainText}\n\n${text !== detectedURL ? "My question: " + text.replace(detectedURL,"").trim() : "What do you think about this?"}`;
-
-      conversation.push({
-        role:"user", content:userMsg,
-        _display:"link-card", _url:detectedURL, _title:linkData.title, _desc:linkData.desc
-      });
-      saveMemory();
-
-      const apiMessages = [...conversation.filter(m=>!m._display || m._display==="link-card")];
-
-      const response = await fetch(API_URL,{
-        method:"POST",
-        headers:{"Authorization":"Bearer "+API_KEY,"Content-Type":"application/json"},
-        body:JSON.stringify({model:"mistral-large-latest", messages:apiMessages})
-      });
-      const data = await response.json();
-      thinking.remove();
-      statusText.textContent = "online";
-      const reply = data.choices?.[0]?.message?.content || "Something interrupted my thoughts...";
-      addMessage(reply,"bot");
-      conversation.push({role:"assistant",content:reply});
-      saveMemory();
-
-    } catch(err){
-      thinking.remove();
-      statusText.textContent = "online";
-      addMessage("Couldn't fetch that link 😔 It might be blocking outside access.","bot");
-      console.error(err);
-    }
-    return;
-  }
-
-  /* ── IMAGE handling ── */
-  if(attachment?.type === "image"){
-    addMessage(attachment.url,"user","image");
-    if(text) addMessage(text,"user");
-
-    conversation.push({
-      role:"user", content:"[Image sent]",
-      _display:"image", _src:attachment.url
-    });
-
-    const thinking = addMessage("•••","bot");
-    thinking.classList.add("typing");
-
-    const userContent = [];
-    if(text) userContent.push({type:"text",text});
-    else     userContent.push({type:"text",text:"What do you see in this image? React naturally as Sally."});
-    userContent.push({type:"image_url",image_url:{url:`data:${attachment.mime};base64,${attachment.base64}`}});
-
-    const apiMessages = [
-      defaultConversation[0],
-      ...conversation.filter(m=>m.role==="assistant"||(m.role==="user"&&!m._display)).slice(-6),
-      {role:"user",content:userContent}
-    ];
-
-    const cap = {...attachment};
-    removeAttachment();
-
-    try {
-      const response = await fetch(API_URL,{
-        method:"POST",
-        headers:{"Authorization":"Bearer "+API_KEY,"Content-Type":"application/json"},
-        body:JSON.stringify({model:"pixtral-12b-2409",messages:apiMessages})
-      });
-      const data = await response.json();
-      thinking.remove();
-      statusText.textContent = "online";
-      const reply = data.choices?.[0]?.message?.content || "Something interrupted my thoughts...";
-      addMessage(reply,"bot");
-      conversation.push({role:"assistant",content:reply});
-      saveMemory();
-    } catch(err){
-      thinking.remove();
-      statusText.textContent = "online";
-      addMessage("Connection issue 💛","bot");
-    }
-    return;
-  }
-
-  /* ── PDF handling ── */
-  if(attachment?.type === "pdf"){
-    addMessage({name:attachment.name},"user","pdf-card");
-    if(text) addMessage(text,"user");
-
-    const userMsg = `I'm sharing a PDF named "${attachment.name}". Here is its content:\n\n${attachment.text}\n\n${text || "Can you summarize this for me?"}`;
-
-    conversation.push({
-      role:"user", content:userMsg,
-      _display:"pdf-card", _name:attachment.name
-    });
-    saveMemory();
-    removeAttachment();
-
-    const thinking = addMessage("•••","bot");
-    thinking.classList.add("typing");
-
-    const apiMessages = conversation.filter(m => !m._display || m._display === "pdf-card");
-
-    try {
-      const response = await fetch(API_URL,{
-        method:"POST",
-        headers:{"Authorization":"Bearer "+API_KEY,"Content-Type":"application/json"},
-        body:JSON.stringify({model:"mistral-large-latest",messages:apiMessages})
-      });
-      const data = await response.json();
-      thinking.remove();
-      statusText.textContent = "online";
-      const reply = data.choices?.[0]?.message?.content || "Something interrupted my thoughts...";
-      addMessage(reply,"bot");
-      conversation.push({role:"assistant",content:reply});
-      saveMemory();
-    } catch(err){
-      thinking.remove();
-      statusText.textContent = "online";
-      addMessage("Connection issue 💛","bot");
-    }
-    return;
-  }
-
-  /* ── PLAIN TEXT ── */
-  addMessage(text,"user");
-  conversation.push({role:"user",content:text});
-  saveMemory();
-
   const thinking = addMessage("•••","bot");
   thinking.classList.add("typing");
 
-  const apiMessages = conversation.filter(m=>!m._display);
+  // Build message content for API
+  // We send the last context + current message with optional image
+  let userContent;
+
+  if(pendingImageBase64){
+    // Use Pixtral vision model when image is attached
+    userContent = [];
+    if(text) userContent.push({type:"text", text:text});
+    else     userContent.push({type:"text", text:"What do you see in this image? React naturally as Sally."});
+    userContent.push({
+      type:"image_url",
+      image_url:{
+        url:`data:${pendingImageType};base64,${pendingImageBase64}`
+      }
+    });
+  } else {
+    userContent = text;
+  }
+
+  // Build messages array for API (system + history + new message)
+  // For vision requests, use a simplified history (Pixtral needs clean array)
+  let apiMessages;
+  if(pendingImageBase64){
+    // Only send system prompt + new vision message (no prior image objects in history)
+    apiMessages = [
+      defaultConversation[0],
+      ...conversation
+        .filter(m => m.role==="assistant" || (m.role==="user" && !m.image))
+        .slice(-6), // last 6 text turns for context
+      {role:"user", content:userContent}
+    ];
+  } else {
+    apiMessages = [
+      ...conversation.filter(m => !m.image),
+      {role:"user", content:text}
+    ];
+  }
+
+  // Choose model
+  const model = pendingImageBase64 ? "pixtral-12b-2409" : "ministral-8b-latest";
+
+  // Save to memory before clearing pending image
+  conversation.push({role:"user", content: text || "[Image]"});
+  saveMemory();
+
+  const capturedImageBase64 = pendingImageBase64;
+  removeImage(); // clear pending state
 
   try {
     if(conversation.length > 30) conversation.splice(1,4);
+
     const response = await fetch(API_URL,{
       method:"POST",
-      headers:{"Authorization":"Bearer "+API_KEY,"Content-Type":"application/json"},
-      body:JSON.stringify({model:"ministral-8b-latest",messages:apiMessages})
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({model, messages:apiMessages})
     });
+
     const data = await response.json();
     thinking.remove();
     statusText.textContent = "online";
+
     if(data.error){
-      const e = "Sorry, something went wrong 💛 ("+data.error.message+")";
-      addMessage(e,"bot");
-      conversation.push({role:"assistant",content:e});
+      const errMsg = "Sorry, something went wrong 💛 (" + (data.error.message||"unknown error") + ")";
+      addMessage(errMsg,"bot");
+      conversation.push({role:"assistant",content:errMsg});
     } else {
       const reply = data.choices?.[0]?.message?.content || "Something interrupted my thoughts...";
       addMessage(reply,"bot");
       conversation.push({role:"assistant",content:reply});
     }
+
     saveMemory();
+
   } catch(err){
     thinking.remove();
     statusText.textContent = "online";
-    addMessage("Connection issue 💛","bot");
+    addMessage("Connection issue — check your internet 💛","bot");
+    console.error(err);
   }
 }
 
-/* ── CTRL+ENTER TO SEND ── */
+/* ── CTRL+ENTER TO SEND, ENTER = NEW LINE ── */
 userInput.addEventListener("keydown", e => {
-  if(e.key==="Enter" && e.ctrlKey){ e.preventDefault(); sendMessage(); }
+  if(e.key==="Enter" && e.ctrlKey){
+    e.preventDefault();
+    sendMessage();
+  }
 });
 
 /* ── AUTO RESIZE ── */
@@ -687,18 +554,21 @@ userInput.addEventListener("input", function(){
   this.style.height = this.scrollHeight + "px";
 });
 
-/* ── IMAGE VIEWER ── */
+/* ── FULLSCREEN IMAGE VIEWER ── */
 function openViewer(src){
   document.getElementById("imgViewerImg").src = src;
   document.getElementById("imgViewer").classList.add("active");
 }
+
 function closeViewer(){
   document.getElementById("imgViewer").classList.remove("active");
   document.getElementById("imgViewerImg").src = "";
 }
-document.getElementById("imgViewer").addEventListener("click",function(e){
-  if(e.target===this) closeViewer();
+
+// tap outside image to close
+document.getElementById("imgViewer").addEventListener("click", function(e){
+  if(e.target === this) closeViewer();
 });
 </script>
 </body>
-</html>
+  </html>
