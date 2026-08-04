@@ -135,6 +135,8 @@ Electronics & Telecommunication Engineering Student
 Building AI assistants, embedded systems, and practical software projects through continuous experimentation and learning.
 
 ---
+## 🔗 Live Demo
+👉 [Click here to try it live]https://mraayanshaikh37.github.io/sally-roleplay-ai/
 
 # 📄 License
 
