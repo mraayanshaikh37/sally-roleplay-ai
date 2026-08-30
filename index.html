@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sally 💛</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html,body{
+  height:100%;
+  font-family:"Segoe UI",sans-serif;
+  background:#111b21;
+  overflow:hidden;
+}
+
+.chat-container{
+  height:100dvh;
+  display:flex;
+  flex-direction:column;
+  background:#0b141a;
+}
+
+/* HEADER */
+.chat-header{
+  height:60px;
+  background:#202c33;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  color:white;
+  border-bottom:1px solid #2f3b43;
+  flex-shrink:0;
+}
+
+.profile{ display:flex; align-items:center; gap:10px; }
+
+.profile img{
+  width:42px; height:42px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.profile-info{ display:flex; flex-direction:column; }
+.profile-info span{ font-size:17px; }
+.profile-info small{ font-size:12px; color:#8696a0; }
+
+.reset-btn{
+  background:none; border:none;
+  color:#8696a0; font-size:14px; cursor:pointer;
+}
+
+/* MESSAGES */
+.messages{
+  flex:1;
+  overflow-y:auto;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  background:
+    linear-gradient(rgba(11,20,26,0.82),rgba(11,20,26,0.82)),
+    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop");
+  background-size:cover;
+  background-position:center;
+  scroll-behavior:smooth;
+}
+
+.message{
+  max-width:78%;
+  padding:8px 10px;
+  margin-bottom:10px;
+  border-radius:8px;
+  line-height:1.4;
+  font-size:14px;
+  word-wrap:break-word;
+  white-space:pre-wrap;
+  animation:fadeIn .15s ease;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(5px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.user{
+  align-self:flex-end;
+  background:#005c4b;
+  color:#e9edef;
+  border-top-right-radius:2px;
+}
+
+.bot{
+  align-self:flex-start;
+  background:#202c33;
+  color:#e9edef;
+  border-top-left-radius:2px;
+}
+
+.time{
+  display:block;
+  text-align:right;
+  font-size:10px;
+  opacity:0.7;
+  margin-top:4px;
+}
+
+.chat-image{
+  max-width:220px;
+  border-radius:10px;
+  display:block;
+  margin-top:5px;
+  cursor:pointer;
+  transition:opacity 0.15s;
+}
+
+.chat-image:active{ opacity:0.8; }
+
+/* MULTIPLE IMAGES IN ONE BUBBLE (PDF pages) */
+.chat-image-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:5px;
+}
+
+.chat-image-row .chat-image{
+  max-width:100px;
+  margin-top:0;
+}
+
+/* FULLSCREEN IMAGE VIEWER */
+#imgViewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  z-index:999;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+#imgViewer.active{ display:flex; }
+
+#imgViewer img{
+  max-width:95vw;
+  max-height:85vh;
+  border-radius:8px;
+  object-fit:contain;
+}
+
+#imgViewerClose{
+  position:absolute;
+  top:16px;
+  right:16px;
+  background:rgba(255,255,255,0.15);
+  border:none;
+  color:white;
+  font-size:22px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.typing{ font-size:22px; letter-spacing:2px; opacity:0.7; }
+
+/* ATTACHMENT PREVIEW STRIP */
+#imagePreviewStrip{
+  display:none;
+  background:#1a2530;
+  padding:8px 12px;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
+
+#previewThumbs{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  flex:1;
+}
+
+#previewThumbs img{
+  height:48px;
+  border-radius:6px;
+  flex-shrink:0;
+}
+
+#imagePreviewStrip span{
+  color:#8696a0;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+#removeImageBtn{
+  background:none;
+  border:none;
+  color:#e9edef;
+  font-size:18px;
+  cursor:pointer;
+  padding:4px;
+  flex-shrink:0;
+}
+
+/* PDF PROCESSING INDICATOR */
+#pdfLoadingStrip{
+  display:none;
+  background:#1a2530;
+  padding:8px 12px;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+  color:#8696a0;
+  font-size:12px;
+}
+
+/* INPUT */
+.input-area{
+  background:#202c33;
+  padding:10px;
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  flex-shrink:0;
+}
+
+.image-btn{
+  width:46px; height:46px;
+  border-radius:50%;
+  background:#2a3942;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  cursor:pointer;
+  flex-shrink:0;
+  position:relative;
+}
+
+/* Badge shown when attachment(s) present */
+.image-btn .badge{
+  display:none;
+  position:absolute;
+  top:-2px; right:-2px;
+  min-width:16px;
+  height:16px;
+  padding:0 3px;
+  background:#00a884;
+  border-radius:8px;
+  font-size:10px;
+  color:white;
+  align-items:center;
+  justify-content:center;
+}
+
+textarea{
+  flex:1;
+  border:none;
+  outline:none;
+  resize:none;
+  background:#2a3942;
+  color:white;
+  border-radius:24px;
+  padding:12px 16px;
+  font-size:14px;
+  font-family:inherit;
+  min-height:45px;
+  max-height:120px;
+  overflow-y:auto;
+}
+
+.send-btn{
+  width:46px; height:46px;
+  border:none;
+  border-radius:50%;
+  background:#00a884;
+  color:white;
+  font-size:18px;
+  cursor:pointer;
+  transition:background 0.2s;
+}
+
+.send-btn:active{ background:#008f71; }
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+
+  <!-- HEADER -->
+  <div class="chat-header">
+    <div class="profile">
+      <img src="https://cdn-icons-png.flaticon.com/512/6997/6997662.png">
+      <div class="profile-info">
+        <span>Sally 💛</span>
+        <small id="statusText">online</small>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="clearMemory()">Reset</button>
+  </div>
+
+  <!-- CHAT -->
+  <div class="messages" id="messages"></div>
+
+  <!-- PDF PROCESSING INDICATOR -->
+  <div id="pdfLoadingStrip">
+    <span id="pdfLoadingText">Reading PDF pages...</span>
+  </div>
+
+  <!-- ATTACHMENT PREVIEW STRIP -->
+  <div id="imagePreviewStrip">
+    <div id="previewThumbs"></div>
+    <span id="previewLabel">attached</span>
+    <button id="removeImageBtn" onclick="removeImage()">✕</button>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-area">
+    <label class="image-btn" id="imageLabel">
+      📎
+      <span class="badge" id="attachBadge"></span>
+      <input type="file" id="imageInput" accept="image/*,application/pdf" hidden>
+    </label>
+    <textarea id="userInput" rows="1" placeholder="Message Sally..."></textarea>
+    <button class="send-btn" onclick="sendMessage()">➤</button>
+  </div>
+
+</div>
+
+<!-- FULLSCREEN IMAGE VIEWER -->
+<div id="imgViewer">
+  <button id="imgViewerClose" onclick="closeViewer()">✕</button>
+  <img id="imgViewerImg" src="">
+</div>
+
+<!-- PDF.js (renders PDF pages to images so diagrams/embedded images are visible to the vision model, not just extracted text) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+</script>
+
+<script>
+/* ── CONFIG ── */
+const API_URL = "https://mistral-proxy.mraayanshaikh37.workers.dev";
+const MAX_PDF_PAGES = 6; // cap pages sent per PDF to keep payload/requests reasonable
+
+/* ── ELEMENTS ── */
+const messagesDiv    = document.getElementById("messages");
+const userInput      = document.getElementById("userInput");
+const statusText     = document.getElementById("statusText");
+const imageInput     = document.getElementById("imageInput");
+const previewStrip   = document.getElementById("imagePreviewStrip");
+const previewThumbs  = document.getElementById("previewThumbs");
+const previewLabel   = document.getElementById("previewLabel");
+const attachBadge    = document.getElementById("attachBadge");
+const pdfLoadingStrip= document.getElementById("pdfLoadingStrip");
+const pdfLoadingText = document.getElementById("pdfLoadingText");
+
+/* ── PENDING ATTACHMENTS STATE ── */
+/* Each attachment: { base64, type, dataURL, label } */
+let pendingAttachments = [];
+
+/* ── MEMORY ── */
+const defaultConversation = [{
+  role:"system",
+  content:`You are Sally. You are emotionally warm, calm, natural, and realistic.
+Avoid robotic replies. Avoid explicit content. Keep responses concise but heartfelt.
+Be emotionally intelligent. When shown an image or PDF pages, describe and react to what you actually see (including diagrams, charts, and embedded images) naturally as Sally would.`
+}];
+
+const savedConversation = localStorage.getItem("sally_memory");
+const conversation = savedConversation
+  ? JSON.parse(savedConversation)
+  : [...defaultConversation];
+
+/* ── HELPERS ── */
+function getTime(){
+  return new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+}
+
+function saveMemory(){
+  localStorage.setItem("sally_memory", JSON.stringify(conversation));
+}
+
+function addMessage(content, type, isImage=false){
+  const msg = document.createElement("div");
+  msg.className = "message " + type;
+  if(isImage){
+    msg.innerHTML = `<img src="${content}" class="chat-image" onclick="openViewer(this.src)"><span class="time">${getTime()}</span>`;
+  } else {
+    msg.innerHTML = `${content}<span class="time">${getTime()}</span>`;
+  }
+  messagesDiv.appendChild(msg);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  return msg;
+}
+
+/* Bubble showing multiple images at once (used for PDF pages) */
+function addMultiImageMessage(urls, type){
+  const msg = document.createElement("div");
+  msg.className = "message " + type;
+  const imgsHTML = urls.map(u =>
+    `<img src="${u}" class="chat-image" onclick="openViewer(this.src)">`
+  ).join("");
+  msg.innerHTML = `<div class="chat-image-row">${imgsHTML}</div><span class="time">${getTime()}</span>`;
+  messagesDiv.appendChild(msg);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  return msg;
+}
+
+/* ── RESTORE MEMORY ── */
+function restoreMessages(){
+  conversation.forEach(msg => {
+    if(msg.images && msg.images.length){ addMultiImageMessage(msg.images,"user"); return; }
+    if(msg.image){ addMessage(msg.image,"user",true); return; }
+    if(msg.role==="user")      addMessage(msg.content,"user");
+    if(msg.role==="assistant") addMessage(msg.content,"bot");
+  });
+}
+restoreMessages();
+
+/* ── GREETING ── */
+if(!savedConversation){
+  const greeting = "Hey 💛 I'm Sally. How was your day?";
+  addMessage(greeting,"bot");
+  conversation.push({role:"assistant",content:greeting});
+  saveMemory();
+}
+
+/* ── RESET ── */
+function clearMemory(){
+  if(!confirm("Delete all chats?")) return;
+  localStorage.removeItem("sally_memory");
+  location.reload();
+}
+
+/* ── PREVIEW STRIP RENDER ── */
+function renderPreviewStrip(){
+  if(pendingAttachments.length === 0){
+    previewStrip.style.display = "none";
+    attachBadge.style.display = "none";
+    return;
+  }
+  previewThumbs.innerHTML = pendingAttachments
+    .map(a => `<img src="${a.dataURL}">`)
+    .join("");
+  previewLabel.textContent = pendingAttachments.length === 1
+    ? (pendingAttachments[0].label || "Image attached")
+    : pendingAttachments.length + " pages attached";
+  previewStrip.style.display = "flex";
+  attachBadge.style.display = "flex";
+  attachBadge.textContent = pendingAttachments.length;
+}
+
+function removeImage(){
+  pendingAttachments = [];
+  imageInput.value = "";
+  renderPreviewStrip();
+}
+
+/* ── FILE ATTACH (IMAGE OR PDF) ── */
+imageInput.addEventListener("change", function(){
+  const file = this.files[0];
+  if(!file) return;
+
+  if(file.type === "application/pdf"){
+    handlePdfFile(file);
+  } else if(file.type.startsWith("image/")){
+    handleImageFile(file, file.name);
+  }
+});
+
+function handleImageFile(file, label){
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataURL = e.target.result;
+    pendingAttachments = [{
+      base64: dataURL.split(",")[1],
+      type: file.type,
+      dataURL: dataURL,
+      label: label + " — ask Sally about it"
+    }];
+    renderPreviewStrip();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ── PDF HANDLING: render each page to an image ── */
+async function handlePdfFile(file){
+  pdfLoadingStrip.style.display = "flex";
+  pdfLoadingText.textContent = "Reading PDF pages...";
+
+  try{
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+    const pageCount = Math.min(pdf.numPages, MAX_PDF_PAGES);
+    const attachments = [];
+
+    for(let i = 1; i <= pageCount; i++){
+      pdfLoadingText.textContent = `Rendering page ${i} of ${pageCount}...`;
+
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 1.5 });
+
+      const canvas = document.createElement("canvas");
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext("2d");
+
+      await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+      const dataURL = canvas.toDataURL("image/jpeg", 0.85);
+      attachments.push({
+        base64: dataURL.split(",")[1],
+        type: "image/jpeg",
+        dataURL: dataURL,
+        label: `Page ${i} of ${file.name}`
+      });
+    }
+
+    if(pdf.numPages > MAX_PDF_PAGES){
+      pdfLoadingText.textContent =
+        `Only first ${MAX_PDF_PAGES} of ${pdf.numPages} pages attached (keeps things fast).`;
+      setTimeout(() => { pdfLoadingStrip.style.display = "none"; }, 2500);
+    } else {
+      pdfLoadingStrip.style.display = "none";
+    }
+
+    pendingAttachments = attachments;
+    renderPreviewStrip();
+
+  } catch(err){
+    console.error(err);
+    pdfLoadingText.textContent = "Couldn't read that PDF 💛";
+    setTimeout(() => { pdfLoadingStrip.style.display = "none"; }, 2500);
+  }
+}
+
+/* ── PASTE IMAGE FROM CLIPBOARD ── */
+document.addEventListener("paste", function(e){
+  const items = e.clipboardData?.items;
+  if(!items) return;
+
+  for(const item of items){
+    if(item.type.startsWith("image/")){
+      e.preventDefault();
+      const file = item.getAsFile();
+      if(!file) return;
+      handleImageFile(file, "Pasted image");
+      break;
+    }
+  }
+});
+
+/* ── SEND ── */
+async function sendMessage(){
+  const text = userInput.value.trim();
+  if(!text && pendingAttachments.length === 0) return;
+
+  // Show user attachment bubble(s) first (if any)
+  const attachmentURLs = pendingAttachments.map(a => a.dataURL);
+  if(attachmentURLs.length === 1){
+    addMessage(attachmentURLs[0],"user",true);
+  } else if(attachmentURLs.length > 1){
+    addMultiImageMessage(attachmentURLs,"user");
+  }
+
+  // Show user text bubble
+  if(text){
+    addMessage(text,"user");
+  }
+
+  userInput.value = "";
+  userInput.style.height = "45px";
+
+  // Typing indicator
+  statusText.textContent = "typing...";
+  const thinking = addMessage("•••","bot");
+  thinking.classList.add("typing");
+
+  // Build message content for API
+  let userContent;
+  const hasAttachments = pendingAttachments.length > 0;
+
+  if(hasAttachments){
+    // Use Pixtral vision model when image(s)/PDF page(s) attached
+    userContent = [];
+    if(text) userContent.push({type:"text", text:text});
+    else if(pendingAttachments.length > 1)
+      userContent.push({type:"text", text:"Here are some pages from a document. What do you see? React naturally as Sally."});
+    else
+      userContent.push({type:"text", text:"What do you see in this image? React naturally as Sally."});
+
+    pendingAttachments.forEach(a => {
+      userContent.push({
+        type:"image_url",
+        image_url:{ url:`data:${a.type};base64,${a.base64}` }
+      });
+    });
+  } else {
+    userContent = text;
+  }
+
+  // Build messages array for API (system + history + new message)
+  let apiMessages;
+  if(hasAttachments){
+    // Only send system prompt + new vision message (no prior image objects in history)
+    apiMessages = [
+      defaultConversation[0],
+      ...conversation
+        .filter(m => m.role==="assistant" || (m.role==="user" && !m.image && !m.images))
+        .slice(-6), // last 6 text turns for context
+      {role:"user", content:userContent}
+    ];
+  } else {
+    apiMessages = [
+      ...conversation.filter(m => !m.image && !m.images),
+      {role:"user", content:text}
+    ];
+  }
+
+  // Choose model
+  const model = hasAttachments ? "pixtral-12b-2409" : "ministral-8b-latest";
+
+  // Save to memory before clearing pending attachments
+  if(attachmentURLs.length > 1){
+    conversation.push({role:"user", content: text || "[PDF pages sent]", images: attachmentURLs});
+  } else if(attachmentURLs.length === 1){
+    conversation.push({role:"user", content: text || "[Image sent]", image: attachmentURLs[0]});
+  } else {
+    conversation.push({role:"user", content: text});
+  }
+  saveMemory();
+
+  removeImage(); // clear pending state
+
+  try {
+    if(conversation.length > 30) conversation.splice(1,4);
+
+    const response = await fetch(API_URL,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({model, messages:apiMessages})
+    });
+
+    const data = await response.json();
+    thinking.remove();
+    statusText.textContent = "online";
+
+    if(data.error){
+      const errMsg = "Sorry, something went wrong 💛 (" + (data.error.message||"unknown error") + ")";
+      addMessage(errMsg,"bot");
+      conversation.push({role:"assistant",content:errMsg});
+    } else {
+      const reply = data.choices?.[0]?.message?.content || "Something interrupted my thoughts...";
+      addMessage(reply,"bot");
+      conversation.push({role:"assistant",content:reply});
+    }
+
+    saveMemory();
+
+  } catch(err){
+    thinking.remove();
+    statusText.textContent = "online";
+    addMessage("Connection issue — check your internet 💛","bot");
+    console.error(err);
+  }
+}
+
+/* ── CTRL+ENTER TO SEND, ENTER = NEW LINE ── */
+userInput.addEventListener("keydown", e => {
+  if(e.key==="Enter" && e.ctrlKey){
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+/* ── AUTO RESIZE ── */
+userInput.addEventListener("input", function(){
+  this.style.height = "auto";
+  this.style.height = this.scrollHeight + "px";
+});
+
+/* ── FULLSCREEN IMAGE VIEWER ── */
+function openViewer(src){
+  document.getElementById("imgViewerImg").src = src;
+  document.getElementById("imgViewer").classList.add("active");
+}
+
+function closeViewer(){
+  document.getElementById("imgViewer").classList.remove("active");
+  document.getElementById("imgViewerImg").src = "";
+}
+
+// tap outside image to close
+document.getElementById("imgViewer").addEventListener("click", function(e){
+  if(e.target === this) closeViewer();
+});
+</script>
+</body>
+  </html>
