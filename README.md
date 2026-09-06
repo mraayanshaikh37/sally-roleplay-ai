@@ -41,7 +41,7 @@ Sally continues to evolve with new features focused on richer interactions and i
 | CSS3 | Styling |
 | JavaScript | Application Logic |
 | LocalStorage | Persistent Chat Memory |
-| Mistral API | Text Generation |
+|  API | Text Generation |
 | Pixtral Vision Model | Image Understanding |
 | Fetch API | API Communication |
 
