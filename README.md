@@ -106,7 +106,7 @@ This project demonstrates practical concepts such as:
 # 🎯 Project Status
 
 🟢 Active Development
-
+🔴 apk wrapping using this repository 
 Sally continues to receive improvements in both AI capabilities and user experience.
 
 ---
