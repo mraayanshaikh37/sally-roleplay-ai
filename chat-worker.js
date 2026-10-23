@@ -1,13 +1,13 @@
 /* =================================================
-   CHAT WORKER — text-only, talks to NVIDIA only.
-   Needs one secret: NVIDIA_API_KEY
+   CHAT WORKER — uncensored (OpenRouter / Dolphin)
+   Needs one secret: OPENROUTER_API_KEY
    ================================================= */
 
 const NVIDIA_URL =
-  "https://integrate.api.nvidia.com/v1/chat/completions";
+  "https://openrouter.ai/api/v1/chat/completions";
 
 const NVIDIA_MODEL =
-  "nvidia/nemotron-3.5-lightning-30b-a3b";
+  "cognitivecomputations/dolphin-mistral-24b-venice-edition:free";
 
 /* =================================================
    ALLOWED ORIGINS
@@ -58,7 +58,9 @@ async function callNvidia(messages, temperature, maxTokens, env) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${String(env.NVIDIA_API_KEY).trim()}`
+      "Authorization": `Bearer ${String(env.OPENROUTER_API_KEY).trim()}`,
+      "HTTP-Referer": "https://mraayanshaikh37.github.io",
+      "X-Title": "Sally Chat"
     },
     body: JSON.stringify({
       model: NVIDIA_MODEL,
@@ -74,14 +76,14 @@ async function callNvidia(messages, temperature, maxTokens, env) {
     const message =
       data?.error?.message ||
       data?.message ||
-      `NVIDIA request failed (${response.status})`;
+      `OpenRouter request failed (${response.status})`;
     throw new Error(message);
   }
 
   return data;
 }
 
-/* Streaming variant — returns NVIDIA's raw SSE ReadableStream body,
+/* Streaming variant — returns raw SSE ReadableStream body,
    which gets piped straight through to the browser untouched. */
 async function callNvidiaStream(messages, temperature, maxTokens, env) {
 
@@ -89,7 +91,9 @@ async function callNvidiaStream(messages, temperature, maxTokens, env) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${String(env.NVIDIA_API_KEY).trim()}`
+      "Authorization": `Bearer ${String(env.OPENROUTER_API_KEY).trim()}`,
+      "HTTP-Referer": "https://mraayanshaikh37.github.io",
+      "X-Title": "Sally Chat"
     },
     body: JSON.stringify({
       model: NVIDIA_MODEL,
@@ -117,7 +121,7 @@ async function callNvidiaStream(messages, temperature, maxTokens, env) {
       message = raw;
     }
 
-    throw new Error(message || `NVIDIA request failed (${response.status})`);
+    throw new Error(message || `OpenRouter request failed (${response.status})`);
   }
 
   return response.body;
@@ -151,8 +155,8 @@ export default {
       });
     }
 
-    if (!env.NVIDIA_API_KEY) {
-      return json({ error: "NVIDIA_API_KEY secret is not set on this Worker." }, 500, origin);
+    if (!env.OPENROUTER_API_KEY) {
+      return json({ error: "OPENROUTER_API_KEY secret is not set on this Worker." }, 500, origin);
     }
 
     let body;
@@ -182,7 +186,7 @@ export default {
         return json(nvidiaData, 200, origin);
       } catch (err) {
         return json(
-          { error: `NVIDIA request failed: ${err.message}` },
+          { error: `OpenRouter request failed: ${err.message}` },
           502,
           origin
         );
@@ -206,7 +210,7 @@ export default {
       });
     } catch (err) {
       return json(
-        { error: `NVIDIA request failed: ${err.message}` },
+        { error: `OpenRouter request failed: ${err.message}` },
         502,
         origin
       );
